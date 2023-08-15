@@ -1,16 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Categories = ({items}) => {
-  return (
+
+    const [activeItem, setActiveItem] = useState(null);
+
+    const onSelectItem = index => {
+        setActiveItem(index);
+    }
+
+    return (
     <div className="categories">
-      <ul>
-        <li className='active'>Все</li>
+        <ul>
+        <li onClick={() => onSelectItem(null)} className={activeItem === null ? 'active' : ''} >Все</li>
         {items.map((item, index) => {
-            return <li key={`${item}_${index}`}>{item}</li>
+            return <li className={activeItem === index ? 'active' : ''} onClick={() => onSelectItem(index)} key={`${item}_${index}`}>{item}</li>
         })}
-      </ul>
+        </ul>
     </div>
-  );
+    );
 }
 
 export default Categories;
