@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 const Categories = ({items}) => {
 
-    const [activeItem, setActiveItem] = useState(null);
+    const [activeItem, setActiveItem] = useState(0);
 
     const onSelectItem = index => {
         setActiveItem(index);
@@ -12,8 +12,12 @@ const Categories = ({items}) => {
     <div className="categories">
         <ul>
         <li onClick={() => onSelectItem(null)} className={activeItem === null ? 'active' : ''} >Все</li>
-        {items.map((item, index) => {
-            return <li className={activeItem === index ? 'active' : ''} onClick={() => onSelectItem(index)} key={`${item}_${index}`}>{item}</li>
+        {items 
+            && items.map((item, index) => {
+            return <li className={activeItem === index ? 'active' : ''}
+                        onClick={() => onSelectItem(index)}
+                        key={`${item}_${index}`}>
+                            {item}</li>
         })}
         </ul>
     </div>
