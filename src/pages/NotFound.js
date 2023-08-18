@@ -1,8 +1,9 @@
 import React from 'react'
+import NotFoundBlock from '../components/NotFoundBlock';
 
 const NotFound = () => {
   return (
-    <h1>Ничего не найдено!</h1>
+    <NotFoundBlock />
   )
 }
 
