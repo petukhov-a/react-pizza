@@ -15,4 +15,4 @@ const NotFoundBlock = () => {
   );
 }
 
-export default NotFoundBlock
+export default NotFoundBlock;
