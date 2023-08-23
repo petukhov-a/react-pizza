@@ -1,4 +1,4 @@
-const Categories = ({value, onChangeCategory}) => {
+const Categories = ({ value, onChangeCategory }) => {
     const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
     return (
