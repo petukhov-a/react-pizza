@@ -15,16 +15,17 @@ const Home = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isSortOrderAsc, setIsSortOrderAsc] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
-    const [sortType, setSortType] = useState({
-        name: 'популярности',
-        sortProperty: 'rating'    
-    });
 
-    const categoryId = useSelector((state) => state.filter.categoryId);
+    const {sort, categoryId} = useSelector(state => state.filter);
+
     const dispatch = useDispatch();
 
+    const onChangeCategory = (id) => {
+      dispatch(setCategoryId(id));
+    }
+
     const category = categoryId > 0 ? `&category=${categoryId}` : '';
-    const sortBy = sortType.sortProperty;
+    const sortBy = sort.sortProperty;
     const sortOrder = isSortOrderAsc ? 'asc' : 'desc';
     const search = searchValue ? `&search=${searchValue}` : '';
 
@@ -38,7 +39,7 @@ const Home = () => {
             });
         
         window.scrollTo(0, 0);
-    }, [categoryId, sortType, isSortOrderAsc, searchValue, currentPage]);
+    }, [categoryId, sort, isSortOrderAsc, searchValue, currentPage]);
 
     const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index}/>);
     const pizzas = items.map(pizza => <PizzaBlock {...pizza} key={pizza.id}/>);
@@ -46,10 +47,8 @@ const Home = () => {
     return (
       <div className="container">
         <div className="content__top">
-          <Categories value={categoryId} onChangeCategory={(index) => dispatch(setCategoryId(index))} />
+          <Categories value={categoryId} onChangeCategory={(id) => onChangeCategory(id)} />
           <SortPopup
-            value={sortType}
-            onChangeSort={setSortType}
             onChangeSortOrder={setIsSortOrderAsc}
             isSortOrderAsc={isSortOrderAsc}
           />

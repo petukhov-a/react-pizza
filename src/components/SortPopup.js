@@ -1,6 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setSort } from '../redux/slices/filterSlice';
 
-const SortPopup = ( {value, onChangeSort, onChangeSortOrder, isSortOrderAsc} ) => {
+const SortPopup = ( {onChangeSortOrder, isSortOrderAsc} ) => {
+    const dispatch = useDispatch();
+    const sort = useSelector(state => state.filter.sort);
+
     const [visiblePopup, setVisiblePopup] = useState(false);
     const sortRef = useRef();
     const list=[
@@ -23,7 +28,7 @@ const SortPopup = ( {value, onChangeSort, onChangeSortOrder, isSortOrderAsc} ) =
     }
 
     const onSelectItem = sortType => {
-        onChangeSort(sortType);
+        dispatch(setSort(sortType));
         setVisiblePopup(false);
     }
 
@@ -48,13 +53,13 @@ const SortPopup = ( {value, onChangeSort, onChangeSortOrder, isSortOrderAsc} ) =
             />
           </svg>
           <b>Сортировка по:</b>
-          <span onClick={toggleVisiblePopup}>{value.name}</span>
+          <span onClick={toggleVisiblePopup}>{sort.name}</span>
         </div>
         {visiblePopup && <div className="sort__popup">
           <ul>
             {list.map((item, index) => (
                 <li onClick={() => onSelectItem(item)}
-                    className={value.sortProperty === item.sortProperty ? 'active' : ''}
+                    className={sort.sortProperty === item.sortProperty ? 'active' : ''}
                     key={`${item.name}_${index}`}>
                         {item.name}</li>
             ))}
