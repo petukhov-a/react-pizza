@@ -2,16 +2,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSort } from '../redux/slices/filterSlice';
 
+export const sortList = [
+  {name: 'популярности', sortProperty: 'rating'},
+  {name: 'цене', sortProperty: 'price'},
+  {name: 'алфавиту', sortProperty: 'title'}];
+
 const SortPopup = ( {onChangeSortOrder, isSortOrderAsc} ) => {
     const dispatch = useDispatch();
     const sort = useSelector(state => state.filter.sort);
 
     const [visiblePopup, setVisiblePopup] = useState(false);
     const sortRef = useRef();
-    const list=[
-      {name: 'популярности', sortProperty: 'rating'},
-      {name: 'цене', sortProperty: 'price'},
-      {name: 'алфавиту', sortProperty: 'title'}];
 
     const onOrderClick = () => {
       onChangeSortOrder(!isSortOrderAsc);
@@ -57,7 +58,7 @@ const SortPopup = ( {onChangeSortOrder, isSortOrderAsc} ) => {
         </div>
         {visiblePopup && <div className="sort__popup">
           <ul>
-            {list.map((item, index) => (
+            {sortList.map((item, index) => (
                 <li onClick={() => onSelectItem(item)}
                     className={sort.sortProperty === item.sortProperty ? 'active' : ''}
                     key={`${item.name}_${index}`}>

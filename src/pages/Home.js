@@ -1,5 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import qs from 'qs';
 
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
@@ -7,9 +9,10 @@ import Pagination from '../components/Pagination';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { Categories, SortPopup } from '../components';
-import { setCategoryId, setCurrentPage } from '../redux/slices/filterSlice';
+import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
 
 import { SearchContext } from '../App';
+import { sortList } from '../components/SortPopup';
 
 const Home = () => {
     const {searchValue} = useContext(SearchContext);
@@ -19,6 +22,7 @@ const Home = () => {
 
     const {sort, categoryId, currentPage} = useSelector(state => state.filter);
 
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const onChangePage = number => {
@@ -28,6 +32,23 @@ const Home = () => {
     const onChangeCategory = (id) => {
       dispatch(setCategoryId(id));
     }
+
+    useEffect(() => {
+      if (window.location.search) {
+        const params = qs.parse(window.location.search.substring(1));
+
+        console.log(params);
+
+        const sort = sortList.find(obj => obj.sortProperty === params.sortProperty);
+
+        dispatch(
+          setFilters({
+            ...params,
+            sort
+          })
+        );
+      }
+    }, []);
 
     const category = categoryId > 0 ? `&category=${categoryId}` : '';
     const sortBy = sort.sortProperty;
@@ -48,6 +69,16 @@ const Home = () => {
         
         window.scrollTo(0, 0);
     }, [categoryId, sort, isSortOrderAsc, searchValue, currentPage]);
+
+    useEffect(() => {
+      const queryString = qs.stringify({
+        sortProperty: sort.sortProperty,
+        categoryId,
+        currentPage
+      });
+      
+      navigate(`?${queryString}`);
+    }, [categoryId, sort.sortProperty, currentPage]);
 
     const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index}/>);
     const pizzas = items.map(pizza => <PizzaBlock {...pizza} key={pizza.id}/>);
