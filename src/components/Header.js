@@ -1,10 +1,13 @@
 import { Link } from 'react-router-dom';
+
 import logoSvg from '../assets/img/pizza-logo.svg';
 
 import Button from './Button';
 import Search from './Search';
 
 const Header = () => {
+    const totalCount = 0;
+
     return (
       <div className="header">
         <div className="container">
@@ -51,7 +54,7 @@ const Header = () => {
                     strokeLinejoin="round"
                   />
                 </svg>
-                <span>3</span>
+                <span>{totalCount}</span>
               </Button>
             </Link>
           </div>

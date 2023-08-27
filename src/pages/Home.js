@@ -20,7 +20,7 @@ const Home = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isSortOrderAsc, setIsSortOrderAsc] = useState(true);
 
-    const {sort, categoryId, currentPage} = useSelector(state => state.filter);
+    const {sort, categoryId, currentPage } = useSelector(state => state.filter);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();

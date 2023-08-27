@@ -49,10 +49,22 @@ export const cartSlice = createSlice({
             state.pizzas.forEach(item => price += item.price * item.count);
         }
         state.totalPrice = price;
+    },
+    increasePizzas(state, action) {
+        const currentPizza = state.pizzas.find(item => action.payload === item.id);
+        if (currentPizza) {
+            currentPizza.count++;
+        }
+    },
+    decreasePizzas(state, action) {
+        const currentPizza = state.pizzas.find(item => action.payload === item.id);
+        if (currentPizza && currentPizza.count !== 1) {
+            currentPizza.count--;
+        }
     }
   },
 });
 
-export const { setCartItem, setTotalCount, setTotalPrice, clearCart, deletePizza, countPizzas, calcTotalPrice } = cartSlice.actions;
+export const { setCartItem, setTotalCount, setTotalPrice, clearCart, deletePizza, countPizzas, calcTotalPrice, increasePizzas, decreasePizzas } = cartSlice.actions;
 
 export default cartSlice.reducer;
