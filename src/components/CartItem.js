@@ -1,7 +1,14 @@
-import React from 'react'
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { deletePizza } from '../redux/slices/cartSlice';
 
 const CartItem = (props) => {
-  const {title, imageUrl, price, size, type, count} = props;
+  const {title, imageUrl, price, size, type, count, id} = props;
+  const dispatch = useDispatch();
+
+  const onClickDelete = () => {
+    dispatch(deletePizza(id));
+  }
 
   const typeNames = ['тонкое', 'традиционное'];
 
@@ -54,7 +61,7 @@ const CartItem = (props) => {
       <div className="cart__item-price">
         <b>{price} ₽</b>
       </div>
-      <div className="cart__item-remove">
+      <div className="cart__item-remove" onClick={onClickDelete}>
         <div className="button button--outline button--circle">
           <svg
             width="10"

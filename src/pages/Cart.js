@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { setCartItem, setTotalCount, setTotalPrice } from '../redux/slices/cartSlice';
+import { setCartItem, clearCart, countPizzas, calcTotalPrice } from '../redux/slices/cartSlice';
 import CartItem from '../components/CartItem';
 
 const Cart = () => {
@@ -11,25 +11,13 @@ const Cart = () => {
   const totalCount = useSelector(state => state.cart.totalCount);
   const totalPrice = useSelector(state => state.cart.totalPrice);
 
-  const countPizzas = () => {
-    let count = 0;
-    if (cartItems) {
-      cartItems.forEach(item => count += item.count);
-    }
-    dispatch(setTotalCount(count));
-  }
-
-  const calcTotalPrice = () => {
-    let price = 0;
-    if (cartItems) {
-      cartItems.forEach(item => price += item.price * item.count);
-    }
-    dispatch(setTotalPrice(price));
+  const onClickClear = () => {
+    dispatch(clearCart());
   }
 
   useEffect(() => {
-    countPizzas();
-    calcTotalPrice();
+    dispatch(countPizzas());
+    dispatch(calcTotalPrice());
   }, []);
 
   return (
@@ -64,7 +52,7 @@ const Cart = () => {
             </svg>
             Корзина
           </h2>
-          <div className="cart__clear">
+          <div className="cart__clear" onClick={onClickClear}>
             <svg
               width="20"
               height="20"
