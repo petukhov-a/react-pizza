@@ -1,13 +1,36 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { setCartItem } from '../redux/slices/cartSlice';
+import { setCartItem, setTotalCount, setTotalPrice } from '../redux/slices/cartSlice';
 import CartItem from '../components/CartItem';
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const cartItems = useSelector(state => state.cart);
+  const cartItems = useSelector(state => state.cart.pizzas);
+  const totalCount = useSelector(state => state.cart.totalCount);
+  const totalPrice = useSelector(state => state.cart.totalPrice);
+
+  const countPizzas = () => {
+    let count = 0;
+    if (cartItems) {
+      cartItems.forEach(item => count += item.count);
+    }
+    dispatch(setTotalCount(count));
+  }
+
+  const calcTotalPrice = () => {
+    let price = 0;
+    if (cartItems) {
+      cartItems.forEach(item => price += item.price * item.count);
+    }
+    dispatch(setTotalPrice(price));
+  }
+
+  useEffect(() => {
+    countPizzas();
+    calcTotalPrice();
+  }, []);
 
   return (
     <div className="container container--cart">
@@ -91,11 +114,11 @@ const Cart = () => {
           <div className="cart__bottom-details">
             <span>
               {' '}
-              Всего пицц: <b>3 шт.</b>{' '}
+              Всего пицц: <b>{totalCount} шт.</b>{' '}
             </span>
             <span>
               {' '}
-              Сумма заказа: <b>900 ₽</b>{' '}
+              Сумма заказа: <b>{totalPrice} ₽</b>{' '}
             </span>
           </div>
           <div className="cart__bottom-buttons">
