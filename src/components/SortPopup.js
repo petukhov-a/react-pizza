@@ -35,6 +35,7 @@ const SortPopup = ( {onChangeSortOrder, isSortOrderAsc} ) => {
 
     useEffect(() => {
         document.body.addEventListener('click', handleOutsideClick);
+        return () => document.body.removeEventListener('click', handleOutsideClick);
     }, []);
 
     return (
