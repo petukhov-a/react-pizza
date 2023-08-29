@@ -2,23 +2,24 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { setCartItem, clearCart, countPizzas, calcTotalPrice } from '../redux/slices/cartSlice';
+import { addCartItem, clearCart } from '../redux/slices/cartSlice';
 import CartItem from '../components/CartItem';
+import CartEmpty from '../components/CartEmpty'
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const cartItems = useSelector(state => state.cart.pizzas);
+  const { cartItems, totalPrice } = useSelector(state => state.cart);
   const totalCount = useSelector(state => state.cart.totalCount);
-  const totalPrice = useSelector(state => state.cart.totalPrice);
 
   const onClickClear = () => {
-    dispatch(clearCart());
+    if (window.confirm('Ты действительно хочешь очистить корзину?')) {
+      dispatch(clearCart());
+    }
   }
 
-  useEffect(() => {
-    dispatch(countPizzas());
-    dispatch(calcTotalPrice());
-  }, []);
+  if (!totalPrice) {
+    return <CartEmpty/>
+  }
 
   return (
     <div className="container container--cart">
@@ -91,11 +92,10 @@ const Cart = () => {
         <div className="content__items">
           {
             cartItems &&
-              cartItems.map(item => <CartItem
-                                      key={item.id}
+              cartItems.map((item, index) => <CartItem
+                                      key={index}
                                       {...item}
-                                      type={item.types[0]}
-                                      size={item.sizes[0]}/>)
+                                      totalCount={cartItems.length}/>)
           }
         </div>
         <div className="cart__bottom">

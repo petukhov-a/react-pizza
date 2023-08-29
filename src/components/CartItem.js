@@ -1,30 +1,26 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { deletePizza, calcTotalPrice, countPizzas, increasePizzas, decreasePizzas } from '../redux/slices/cartSlice';
+import { removeItem, addCartItem, minusItem } from '../redux/slices/cartSlice';
 
 const CartItem = (props) => {
-  const {title, imageUrl, price, size, type, count, id} = props;
+  const {title, imageUrl, price, size, type, id, count} = props;
   const dispatch = useDispatch();
 
-  const onClickDelete = () => {
-    dispatch(deletePizza(id));
-    dispatch(calcTotalPrice());
-    dispatch(countPizzas());
+  const onClickRemove = () => {
+    if (window.confirm('Ты действительно хочешь удалить товар?')) {
+        dispatch(removeItem(id));
+    }
   }
 
   const onClickPlus = () => {
-    dispatch(increasePizzas(id));
-    dispatch(countPizzas());
-    dispatch(calcTotalPrice());
+    dispatch(addCartItem({
+        id
+    }));
   }
 
   const onClickMinus = () => {
-    dispatch(decreasePizzas(id));
-    dispatch(countPizzas());
-    dispatch(calcTotalPrice());
+    dispatch(minusItem(id));
   }
-
-  const typeNames = ['тонкое', 'традиционное'];
 
   return (
     <div className="cart__item">
@@ -37,7 +33,7 @@ const CartItem = (props) => {
       </div>
       <div className="cart__item-info">
         <h3>{title}</h3>
-        <p>{typeNames[type]}, {size} см.</p>
+        <p>{type}, {size} см.</p>
       </div>
       <div className="cart__item-count">
         <div className="button button--outline button--circle cart__item-count-minus" onClick={onClickMinus}>
@@ -73,9 +69,9 @@ const CartItem = (props) => {
         </div>
       </div>
       <div className="cart__item-price">
-        <b>{price} ₽</b>
+        <b>{price * count} ₽</b>
       </div>
-      <div className="cart__item-remove" onClick={onClickDelete}>
+      <div className="cart__item-remove" onClick={onClickRemove}>
         <div className="button button--outline button--circle">
           <svg
             width="10"
