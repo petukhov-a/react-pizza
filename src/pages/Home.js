@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import qs from 'qs';
 
@@ -10,15 +10,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Categories, SortPopup } from '../components';
 import { selectFilter, setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
 
-import { SearchContext } from '../App';
 import { sortList } from '../components/SortPopup';
 import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
 
 const Home = () => {
-    const { searchValue } = useContext(SearchContext);
     const [isSortOrderAsc, setIsSortOrderAsc] = useState(true);
 
-    const { sort, categoryId, currentPage } = useSelector(selectFilter);
+    const { sort, categoryId, currentPage, searchValue } = useSelector(selectFilter);
     const { items, status } = useSelector(selectPizzaData);
 
     const navigate = useNavigate();
