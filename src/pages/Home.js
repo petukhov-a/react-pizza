@@ -8,18 +8,18 @@ import Pagination from '../components/Pagination';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { Categories, SortPopup } from '../components';
-import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
+import { selectFilter, setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
 
 import { SearchContext } from '../App';
 import { sortList } from '../components/SortPopup';
-import { fetchPizzas } from '../redux/slices/pizzaSlice';
+import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
 
 const Home = () => {
-    const {searchValue} = useContext(SearchContext);
+    const { searchValue } = useContext(SearchContext);
     const [isSortOrderAsc, setIsSortOrderAsc] = useState(true);
 
-    const {sort, categoryId, currentPage } = useSelector(state => state.filter);
-    const { items, status } = useSelector(state => state.pizza);
+    const { sort, categoryId, currentPage } = useSelector(selectFilter);
+    const { items, status } = useSelector(selectPizzaData);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();

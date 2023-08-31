@@ -5,9 +5,10 @@ import logoSvg from '../assets/img/pizza-logo.svg';
 
 import Button from './Button';
 import Search from './Search';
+import { selectCart } from '../redux/slices/cartSlice';
 
 const Header = () => {
-    const {totalPrice} = useSelector(state => state.cart);
+    const {totalPrice} = useSelector(selectCart);
     const totalCount = useSelector(state => state.cart.totalCount);
 
     return (
