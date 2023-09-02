@@ -10,7 +10,7 @@ export const fetchPizzas = createAsyncThunk(
     );
     return data;
   }
-)
+);
 
 const initialState = {
     items: [],

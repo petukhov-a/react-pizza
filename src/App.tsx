@@ -1,5 +1,4 @@
 import { Route, Routes } from 'react-router-dom';
-import { Header } from './components';
 import { Home, Cart, NotFound } from './pages';
 import FullPizza from './pages/FullPizza';
 import MainLayout from './layouts/MainLayout';
