@@ -1,31 +1,31 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { FC, useCallback, useRef, useState } from 'react';
 import { setSearchValue } from '../../redux/slices/filterSlice';
 import debounce from 'lodash.debounce';
 
 import styles from './Search.module.scss';
 import { useDispatch } from 'react-redux';
 
-const Search = () => {
+const Search: FC = () => {
   const [value, setValue] = useState('');
 
   const dispatch = useDispatch();
 
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const onClickClear = () => {
     setValue('');
     dispatch(setSearchValue(''));
-    inputRef.current.focus();
+    inputRef.current?.focus();
   }
 
   const updateSearchValue = useCallback(
-    debounce(str => {
+    debounce((str: string) => {
       dispatch(setSearchValue(str));
     }, 250),
     []
   );
 
-  const onChangeInput = event => {
+  const onChangeInput = (event: any) => {
     setValue(event.target.value);
     updateSearchValue(event.target.value);
   }
@@ -36,7 +36,7 @@ const Search = () => {
         className={styles.icon}
         height="512px"
         id="Layer_1"
-        style={{ enableBackground: 'new 0 0 512 512' }}
+        enableBackground="new 0 0 32 32"
         version="1.1"
         viewBox="0 0 512 512"
         width="512px"

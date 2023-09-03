@@ -7,12 +7,17 @@ type SortItem = {
   sortProperty: string;
 }
 
+type SortPopupProps = {
+  onChangeSortOrder: any;
+  isSortOrderAsc: boolean;
+}
+
 export const sortList: SortItem[] = [
   {name: 'популярности', sortProperty: 'rating'},
   {name: 'цене', sortProperty: 'price'},
   {name: 'алфавиту', sortProperty: 'title'}];
 
-const SortPopup = ( {onChangeSortOrder, isSortOrderAsc}: {onChangeSortOrder: Function, isSortOrderAsc: boolean} ) => {
+const SortPopup: FC<SortPopupProps> = ( {onChangeSortOrder, isSortOrderAsc} ) => {
     const dispatch = useDispatch();
     const sort = useSelector(selectSort);
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import qs from 'qs';
 
@@ -13,7 +13,7 @@ import { selectFilter, setCategoryId, setCurrentPage, setFilters } from '../redu
 import { sortList } from '../components/SortPopup';
 import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
 
-const Home = () => {
+const Home: FC = () => {
     const [isSortOrderAsc, setIsSortOrderAsc] = useState(true);
 
     const { sort, categoryId, currentPage, searchValue } = useSelector(selectFilter);
@@ -24,12 +24,12 @@ const Home = () => {
     const isSearch = useRef(false);
     const isMounted = useRef(false);
 
-    const onChangePage = number => {
-      dispatch(setCurrentPage(number));
+    const onChangePage = (page: number) => {
+      dispatch(setCurrentPage(page));
     }
 
-    const onChangeCategory = (id) => {
-      dispatch(setCategoryId(id));
+    const onChangeCategory = (idx: number) => {
+      dispatch(setCategoryId(idx));
     }
 
     const getPizzas = async () => {
@@ -40,6 +40,7 @@ const Home = () => {
       const search = searchValue ? `&search=${searchValue}` : '';
 
       dispatch(
+        // @ts-ignore
         fetchPizzas({
           category,
           sortBy,
@@ -91,12 +92,12 @@ const Home = () => {
     }, [categoryId, sort, isSortOrderAsc, searchValue, currentPage]);
 
     const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index}/>);
-    const pizzas = items.map(pizza => <PizzaBlock {...pizza} key={pizza.id}/>);
+    const pizzas = items.map((pizza: any) => <PizzaBlock {...pizza} key={pizza.id}/>);
 
     return (
       <div className="container">
         <div className="content__top">
-          <Categories value={categoryId} onChangeCategory={(id) => onChangeCategory(id)} />
+          <Categories value={categoryId} onChangeCategory={(id: number) => onChangeCategory(id)} />
           <SortPopup
             onChangeSortOrder={setIsSortOrderAsc}
             isSortOrderAsc={isSortOrderAsc}
