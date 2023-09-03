@@ -9,7 +9,7 @@ import { selectCart } from '../redux/slices/cartSlice';
 
 const Header = () => {
   const { totalPrice } = useSelector(selectCart);
-  const totalCount = useSelector((state) => state.cart.totalCount);
+  const totalCount = useSelector((state: any) => state.cart.totalCount);
   const location = useLocation();
 
   return (
@@ -28,7 +28,7 @@ const Header = () => {
         <div className="header__cart">
           {location.pathname !== '/cart' && (
             <Link to="/cart">
-              <Button className="button--cart">
+              <Button outline='none' className="button--cart">
                 <span>{totalPrice} ₽</span>
                 <div className="button__delimiter"></div>
                 <svg

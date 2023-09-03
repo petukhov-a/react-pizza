@@ -1,18 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectSort, setSort } from '../redux/slices/filterSlice';
 
-export const sortList = [
+type SortItem = {
+  name: string;
+  sortProperty: string;
+}
+
+export const sortList: SortItem[] = [
   {name: 'популярности', sortProperty: 'rating'},
   {name: 'цене', sortProperty: 'price'},
   {name: 'алфавиту', sortProperty: 'title'}];
 
-const SortPopup = ( {onChangeSortOrder, isSortOrderAsc} ) => {
+const SortPopup = ( {onChangeSortOrder, isSortOrderAsc}: {onChangeSortOrder: Function, isSortOrderAsc: boolean} ) => {
     const dispatch = useDispatch();
     const sort = useSelector(selectSort);
 
     const [visiblePopup, setVisiblePopup] = useState(false);
-    const sortRef = useRef();
+    const sortRef = useRef<HTMLDivElement>(null);
 
     const onOrderClick = () => {
       onChangeSortOrder(!isSortOrderAsc);
@@ -22,13 +27,13 @@ const SortPopup = ( {onChangeSortOrder, isSortOrderAsc} ) => {
         setVisiblePopup(!visiblePopup);
     }
 
-    const handleOutsideClick = (e) => {
+    const handleOutsideClick = (e: any) => {
         if (!e.composedPath().includes(sortRef.current)) {
             setVisiblePopup(false);
         }
     }
 
-    const onSelectItem = sortType => {
+    const onSelectItem = (sortType: SortItem) => {
         dispatch(setSort(sortType));
         setVisiblePopup(false);
     }

@@ -26,7 +26,7 @@ const FullPizza: FC = () => {
   }, []);
 
   if (!pizza) {
-    return 'Загрузка ...';
+    return 'Загрузка ...'; 
   }
 
   return (
