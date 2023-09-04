@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectSort, setSort } from '../redux/slices/filterSlice';
 
@@ -8,7 +8,7 @@ type SortItem = {
 }
 
 type SortPopupProps = {
-  onChangeSortOrder: any;
+  onChangeSortOrder: (isSortOrderAsc: boolean) => void;
   isSortOrderAsc: boolean;
 }
 
@@ -32,20 +32,22 @@ const SortPopup: FC<SortPopupProps> = ( {onChangeSortOrder, isSortOrderAsc} ) =>
         setVisiblePopup(!visiblePopup);
     }
 
-    const handleOutsideClick = (e: any) => {
-        if (!e.composedPath().includes(sortRef.current)) {
-            setVisiblePopup(false);
-        }
-    }
-
     const onSelectItem = (sortType: SortItem) => {
         dispatch(setSort(sortType));
         setVisiblePopup(false);
     }
 
     useEffect(() => {
-        document.body.addEventListener('click', handleOutsideClick);
-        return () => document.body.removeEventListener('click', handleOutsideClick);
+      const handleClickOutside = (event: MouseEvent) => {
+  
+        if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
+          setVisiblePopup(false);
+        }
+      };
+  
+      document.body.addEventListener('click', handleClickOutside);
+  
+      return () => document.body.removeEventListener('click', handleClickOutside);
     }, []);
 
     return (
