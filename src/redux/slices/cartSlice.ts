@@ -23,13 +23,13 @@ const initialState: CartSliceState = {
     totalPrice: 0
 };
 
-// const calcTotalPrice = (items) => {
-//     return items.reduce((sum, obj) => obj.price * obj.count + sum, 0);
-// }
+const calcTotalPrice = (items: CartItem[]) => {
+    return items.reduce((sum, obj) => obj.price * obj.count + sum, 0);
+}
 
-// const calcTotalCount = (items) => {
-//     return items.reduce((sum, obj) => obj.count + sum, 0);
-// }
+const calcTotalCount = (items: CartItem[]) => {
+    return items.reduce((sum, obj) => obj.count + sum, 0);
+}
 
 export const cartSlice = createSlice({
   name: 'cart',
@@ -44,15 +44,10 @@ export const cartSlice = createSlice({
             state.cartItems.push({...action.payload, count: 1});
         }
 
-        // state.totalPrice = calcTotalPrice(state.cartItems);
-        // state.totalCount = calcTotalCount(state.cartItems);
+        state.totalPrice = calcTotalPrice(state.cartItems);
+        state.totalCount = calcTotalCount(state.cartItems);
     },
-    // setTotalCount(state, action) {
-    //     state.totalCount = action.payload
-    // },
-    // setTotalPrice(state, action) {
-    //     state.totalPrice = action.payload
-    // },
+
     clearCart(state) {
         state.cartItems = [];
         state.totalCount = 0;
@@ -60,15 +55,15 @@ export const cartSlice = createSlice({
     },
     removeItem(state, action: PayloadAction<string>) {
         state.cartItems = state.cartItems.filter(item => item.id !== action.payload);
-        // state.totalPrice = calcTotalPrice(state.cartItems);
-        // state.totalCount = calcTotalCount(state.cartItems);
+        state.totalPrice = calcTotalPrice(state.cartItems);
+        state.totalCount = calcTotalCount(state.cartItems);
     },
     minusItem(state, action: PayloadAction<string>) {
         const currentPizza = state.cartItems.find(item => action.payload === item.id);
         if (currentPizza && currentPizza.count !== 1) {
             currentPizza.count--;
-            // state.totalPrice = calcTotalPrice(state.cartItems);
-            // state.totalCount = calcTotalCount(state.cartItems);
+            state.totalPrice = calcTotalPrice(state.cartItems);
+            state.totalCount = calcTotalCount(state.cartItems);
         }
     },
   },

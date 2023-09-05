@@ -1,18 +1,16 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectSort, setSort } from '../redux/slices/filterSlice';
+import {Sort} from '../redux/slices/filterSlice';
 
-type SortItem = {
-  name: string;
-  sortProperty: string;
-}
+
 
 type SortPopupProps = {
   onChangeSortOrder: (isSortOrderAsc: boolean) => void;
   isSortOrderAsc: boolean;
 }
 
-export const sortList: SortItem[] = [
+export const sortList: Sort[] = [
   {name: 'популярности', sortProperty: 'rating'},
   {name: 'цене', sortProperty: 'price'},
   {name: 'алфавиту', sortProperty: 'title'}];
@@ -32,7 +30,7 @@ const SortPopup: FC<SortPopupProps> = ( {onChangeSortOrder, isSortOrderAsc} ) =>
         setVisiblePopup(!visiblePopup);
     }
 
-    const onSelectItem = (sortType: SortItem) => {
+    const onSelectItem = (sortType: Sort) => {
         dispatch(setSort(sortType));
         setVisiblePopup(false);
     }

@@ -8,7 +8,7 @@ import Pagination from '../components/Pagination';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { Categories, SortPopup } from '../components';
-import { selectFilter, setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
+import { FilterSliceState, selectFilter, setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
 
 import { sortList } from '../components/SortPopup';
 import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
@@ -48,7 +48,7 @@ const Home: FC = () => {
           search,
           currentPage,
         }),
-        );
+      );
     }
 
     useEffect(() => {
@@ -70,12 +70,12 @@ const Home: FC = () => {
 
         const sort = sortList.find(obj => obj.sortProperty === params.sortProperty);
 
+        const filter = {...params, sort} as FilterSliceState;
+
         dispatch(
-          setFilters({
-            ...params,
-            sort
-          })
+          setFilters(filter)
         );
+
         isSearch.current = true;
       }
     }, []);
