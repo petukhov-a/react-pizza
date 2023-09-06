@@ -3,8 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectSort, setSort } from '../redux/slices/filterSlice';
 import {Sort} from '../redux/slices/filterSlice';
 
-
-
 type SortPopupProps = {
   onChangeSortOrder: (isSortOrderAsc: boolean) => void;
   isSortOrderAsc: boolean;

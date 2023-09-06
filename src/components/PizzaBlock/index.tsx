@@ -41,7 +41,9 @@ const PizzaBlock: FC<PizzaBlockProps> = ( {id, title, imageUrl, price, sizes, ty
         <Link to={`/pizza/${id}`}>
           <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
         </Link>
-        <h4 className="pizza-block__title">{title}</h4>
+        <Link to={`/pizza/${id}`}>
+          <h4 className="pizza-block__title">{title}</h4>
+        </Link>
         <div className="pizza-block__selector">
           <ul>
             {types.map((typeId) => (

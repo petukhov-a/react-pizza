@@ -12,6 +12,7 @@ import { FilterSliceState, selectFilter, setCategoryId, setCurrentPage, setFilte
 
 import { sortList } from '../components/SortPopup';
 import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
+import { useAppDispatch } from '../redux/store';
 
 const Home: FC = () => {
     const [isSortOrderAsc, setIsSortOrderAsc] = useState(true);
@@ -20,7 +21,7 @@ const Home: FC = () => {
     const { items, status } = useSelector(selectPizzaData);
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const isSearch = useRef(false);
     const isMounted = useRef(false);
 
@@ -40,14 +41,13 @@ const Home: FC = () => {
       const search = searchValue ? `&search=${searchValue}` : '';
 
       dispatch(
-        // @ts-ignore
         fetchPizzas({
           category,
           sortBy,
           sortOrder,
           search,
           currentPage,
-        }),
+        })
       );
     }
 
@@ -67,8 +67,7 @@ const Home: FC = () => {
     useEffect(() => {
       if (window.location.search) {
         const params = qs.parse(window.location.search.substring(1));
-
-        const sort = sortList.find(obj => obj.sortProperty === params.sortProperty);
+        const sort = sortList.find(obj => obj.sortProperty === params.sortProperty) || sortList[0];
 
         const filter = {...params, sort} as FilterSliceState;
 
