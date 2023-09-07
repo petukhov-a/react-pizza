@@ -60,7 +60,7 @@ export const cartSlice = createSlice({
     },
     minusItem(state, action: PayloadAction<string>) {
         const currentPizza = state.cartItems.find(item => action.payload === item.id);
-        if (currentPizza && currentPizza.count !== 1) {
+        if (currentPizza) {
             currentPizza.count--;
             state.totalPrice = calcTotalPrice(state.cartItems);
             state.totalCount = calcTotalCount(state.cartItems);

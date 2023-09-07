@@ -1,11 +1,14 @@
-import { FC } from "react";
+import { FC, memo } from "react";
+import { useWhyDidYouUpdate } from 'ahooks';
 
 type CategoriesProps = {
     value: number;
     onChangeCategory: (i: number) => void;
 }
 
-const Categories: FC<CategoriesProps> = ({ value, onChangeCategory }) => {
+const Categories: FC<CategoriesProps> = memo(({ value, onChangeCategory }) => {
+    useWhyDidYouUpdate('Categories', { value, onChangeCategory });
+
     const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
     return (
@@ -20,6 +23,6 @@ const Categories: FC<CategoriesProps> = ({ value, onChangeCategory }) => {
         </ul>
     </div>
     );
-}
+});
 
 export default Categories;
