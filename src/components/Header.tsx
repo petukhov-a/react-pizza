@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import logoSvg from '../assets/img/pizza-logo.svg';
 
 import Search from './Search';
-import { selectCart, selectTotalCount } from '../redux/slices/cartSlice';
+import { selectCart, selectTotalCount } from '../redux/slices/cart/selectors';
 import { useEffect, useRef } from 'react';
 
 const Header = () => {
