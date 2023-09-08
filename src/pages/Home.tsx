@@ -8,11 +8,13 @@ import Pagination from '../components/Pagination';
 
 import { useSelector } from 'react-redux';
 import { Categories, SortPopup } from '../components';
-import { FilterSliceState, selectFilter, setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
+import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filter/slice';
 
 import { sortList } from '../components/SortPopup';
 import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
 import { useAppDispatch } from '../redux/store';
+import { selectFilter } from '../redux/slices/filter/selectors';
+import { FilterSliceState } from '../redux/slices/filter/types';
 
 const Home: FC = () => {
     const [isSortOrderAsc, setIsSortOrderAsc] = useState(true);
