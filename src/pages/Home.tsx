@@ -11,10 +11,11 @@ import { Categories, SortPopup } from '../components';
 import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filter/slice';
 
 import { sortList } from '../components/SortPopup';
-import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice';
+import { fetchPizzas } from '../redux/slices/pizza/slice';
 import { useAppDispatch } from '../redux/store';
 import { selectFilter } from '../redux/slices/filter/selectors';
 import { FilterSliceState } from '../redux/slices/filter/types';
+import { selectPizzaData } from '../redux/slices/pizza/selectors';
 
 const Home: FC = () => {
     const [isSortOrderAsc, setIsSortOrderAsc] = useState(true);
