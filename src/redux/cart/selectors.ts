@@ -1,4 +1,4 @@
-import { RootState } from '../../store';
+import { RootState } from '../store';
 
 export const selectCart = (state: RootState) => state.cart;
 export const selectTotalCount = (state: RootState) => state.cart.totalCount;

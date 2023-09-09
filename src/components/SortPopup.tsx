@@ -1,7 +1,7 @@
 import { FC, memo, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setSort } from '../redux/slices/filter/slice';
-import { Sort } from '../redux/slices/filter/types';
+import { setSort } from '../redux/filter/slice';
+import { Sort } from '../redux/filter/types';
 
 type SortPopupProps = {
   onChangeSortOrder: (isSortOrderAsc: boolean) => void;

@@ -2,11 +2,11 @@ import React, { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { selectCart, selectTotalCount } from '../redux/slices/cart/selectors';
+import { selectCart, selectTotalCount } from '../redux/cart/selectors';
 
 import CartItem from '../components/CartItem';
 import CartEmpty from '../components/CartEmpty'
-import { clearCart } from '../redux/slices/cart/slice';
+import { clearCart } from '../redux/cart/slice';
 
 const Cart: FC = () => {
   const dispatch = useDispatch();
