@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { selectCart, selectTotalCount } from '../redux/cart/selectors';
 
-import CartItem from '../components/CartItem';
-import CartEmpty from '../components/CartEmpty'
+import { CartItemBlock as CartItem } from '../components';
+import { CartEmpty } from '../components'
 import { clearCart } from '../redux/cart/slice';
 
 const Cart: FC = () => {

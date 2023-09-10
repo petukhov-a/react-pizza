@@ -14,7 +14,7 @@ export const sortList: Sort[] = [
   {name: 'цене', sortProperty: 'price'},
   {name: 'алфавиту', sortProperty: 'title'}];
 
-const SortPopup: FC<SortPopupProps> = memo(( {onChangeSortOrder, isSortOrderAsc, sort} ) => {
+export const SortPopup: FC<SortPopupProps> = memo(( {onChangeSortOrder, isSortOrderAsc, sort} ) => {
   const dispatch = useDispatch();
 
   const [visiblePopup, setVisiblePopup] = useState(false);
@@ -78,5 +78,3 @@ const SortPopup: FC<SortPopupProps> = memo(( {onChangeSortOrder, isSortOrderAsc,
     </div>
   );
 });
-
-export default SortPopup

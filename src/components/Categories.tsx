@@ -5,7 +5,7 @@ type CategoriesProps = {
     onChangeCategory: (i: number) => void;
 }
 
-const Categories: FC<CategoriesProps> = memo(({ value, onChangeCategory }) => {
+export const Categories: FC<CategoriesProps> = memo(({ value, onChangeCategory }) => {
     const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
     return (
@@ -21,5 +21,3 @@ const Categories: FC<CategoriesProps> = memo(({ value, onChangeCategory }) => {
     </div>
     );
 });
-
-export default Categories;

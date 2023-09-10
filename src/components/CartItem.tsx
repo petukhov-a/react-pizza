@@ -13,7 +13,7 @@ type CartItemProps = {
   count: number;
 }
 
-const CartItemBlock: FC<CartItemProps> = ( {title, imageUrl, price, size, type, id, count} ) => {
+export const CartItemBlock: FC<CartItemProps> = ( {title, imageUrl, price, size, type, id, count} ) => {
   const dispatch = useDispatch();
 
   const onClickRemove = () => {
@@ -105,5 +105,3 @@ const CartItemBlock: FC<CartItemProps> = ( {title, imageUrl, price, size, type, 
     </div>
   );
 }
-
-export default CartItemBlock;
