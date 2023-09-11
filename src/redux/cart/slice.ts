@@ -25,6 +25,8 @@ export const cartSlice = createSlice({
             state.cartItems.push({...action.payload, count: 1});
         }
 
+        console.log(action.payload.size);
+
         state.totalPrice = calcTotalPrice(state.cartItems);
         state.totalCount = calcTotalCount(state.cartItems);
     },

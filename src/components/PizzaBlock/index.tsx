@@ -16,21 +16,24 @@ type PizzaBlockProps = {
 
 export const PizzaBlock: FC<PizzaBlockProps> = ( {id, title, imageUrl, price, sizes, types} ) => {
   const dispatch = useDispatch();
-  const cartItem = useSelector(selectCartItemById(id));
-
-  const [activeType, setActiveType] = useState(0);
+  const initialPizzaType = types[0] as number;
+  const [activeType, setActiveType] = useState(initialPizzaType);
   const [activeSize, setActiveSize] = useState(0);
+
+  const newId = id + price + sizes[activeSize];
+  const cartItem = useSelector(selectCartItemById(newId));
+  const selectedSize = sizes[activeSize];
 
   const typeNames = ['тонкое', 'традиционное'];
   const addedCount = cartItem ? cartItem.count : 0;
 
   const onClickAddButton = () => {
     const item: CartItem = {
-      id,
+      id: newId,
       title,
       imageUrl,
       price,
-      size: sizes[activeSize],
+      size: selectedSize,
       type: typeNames[activeType],
       count: 0
     }
