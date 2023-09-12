@@ -17,23 +17,22 @@ type PizzaBlockProps = {
 export const PizzaBlock: FC<PizzaBlockProps> = ( {id, title, imageUrl, price, sizes, types} ) => {
   const dispatch = useDispatch();
   const initialPizzaType = types[0] as number;
-  const [activeType, setActiveType] = useState(initialPizzaType);
-  const [activeSize, setActiveSize] = useState(0);
-
-  const newId = id + price + sizes[activeSize];
-  const cartItem = useSelector(selectCartItemById(newId));
-  const selectedSize = sizes[activeSize];
-
-  const sizePrices: Record<number, number> = {
-    26: 0,
-    30: 100,
-    40: 200,
-  };
-
-  const sizePrice = sizePrices[selectedSize] || 0;
-  const totalPrice = price + sizePrice;
+  const [activeTypeIndex, setActiveTypeIndex] = useState(initialPizzaType);
+  const [activeSizeIndex, setActiveSizeIndex] = useState(0);
 
   const typeNames = ['тонкое', 'традиционное'];
+
+  const selectedSize = sizes[activeSizeIndex];
+  const selectedType = typeNames[activeTypeIndex];
+  const newId = id + price + sizes[activeSizeIndex] + selectedType;
+  const cartItem = useSelector(selectCartItemById(newId));
+
+  const calcSizePrice = (incPriceStep: number) => {
+    return price + (incPriceStep * activeSizeIndex);
+  }
+
+  const totalPrice = calcSizePrice(100);
+
   const addedCount = cartItem ? cartItem.count : 0;
 
   const onClickAddButton = () => {
@@ -43,7 +42,7 @@ export const PizzaBlock: FC<PizzaBlockProps> = ( {id, title, imageUrl, price, si
       imageUrl,
       price: totalPrice,
       size: selectedSize,
-      type: typeNames[activeType],
+      type: selectedType,
       count: 0
     }
     dispatch(addCartItem(item));
@@ -62,8 +61,8 @@ export const PizzaBlock: FC<PizzaBlockProps> = ( {id, title, imageUrl, price, si
           <ul>
             {types.map((typeId) => (
               <li
-                onClick={() => setActiveType(typeId)}
-                className={activeType === typeId ? 'active' : ''}
+                onClick={() => setActiveTypeIndex(typeId)}
+                className={activeTypeIndex === typeId ? 'active' : ''}
                 key={typeId}>
                 {typeNames[typeId]}
               </li>
@@ -72,8 +71,8 @@ export const PizzaBlock: FC<PizzaBlockProps> = ( {id, title, imageUrl, price, si
           <ul>
             {sizes.map((size, index) => (
               <li
-                onClick={() => setActiveSize(index)}
-                className={activeSize === index ? 'active' : ''}
+                onClick={() => setActiveSizeIndex(index)}
+                className={activeSizeIndex === index ? 'active' : ''}
                 key={index}>
                 {size} см.
               </li>
