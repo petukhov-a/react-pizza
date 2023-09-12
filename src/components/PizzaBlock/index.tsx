@@ -24,6 +24,25 @@ export const PizzaBlock: FC<PizzaBlockProps> = ( {id, title, imageUrl, price, si
   const cartItem = useSelector(selectCartItemById(newId));
   const selectedSize = sizes[activeSize];
 
+    // Создаем объект, который содержит прибавки к стоимости для каждого размера
+  const sizePrices: Record<number, number> = {
+    26: 0,
+    30: 100,
+    40: 200,
+  };
+
+  // Функция для расчета стоимости пиццы на основе размера
+  function calculatePizzaPrice(size: number, basePrice: number): number {
+    const sizePrice = sizePrices[size] || 0;
+
+    const totalPrice = basePrice + sizePrice;
+
+    return totalPrice;
+  }
+
+  const totalPrice = calculatePizzaPrice(activeSize, price);
+
+
   const typeNames = ['тонкое', 'традиционное'];
   const addedCount = cartItem ? cartItem.count : 0;
 
@@ -32,7 +51,7 @@ export const PizzaBlock: FC<PizzaBlockProps> = ( {id, title, imageUrl, price, si
       id: newId,
       title,
       imageUrl,
-      price,
+      price: totalPrice,
       size: selectedSize,
       type: typeNames[activeType],
       count: 0
