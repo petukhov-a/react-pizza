@@ -25,6 +25,10 @@
       &.active {
         background-color: #282828;
         color: #fff;
+
+        &:hover {
+          background-color: lighten($color: #282828, $amount: 5%);
+        }
       }
     }
   }
