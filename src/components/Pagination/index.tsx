@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react';
 
 import styles from './Pagination.module.scss';
 import ReactPaginate from 'react-paginate';
@@ -9,7 +9,9 @@ type PaginationProps = {
   pageCount: number;
 }
 
-export const Pagination: FC<PaginationProps> = ({currentPage, onChangePage, pageCount}) => (
+export const Pagination: FC<PaginationProps> = ({onChangePage, pageCount, currentPage}) =>{
+
+  return (
     <ReactPaginate
       className={styles.root}
       breakLabel="..."
@@ -18,5 +20,7 @@ export const Pagination: FC<PaginationProps> = ({currentPage, onChangePage, page
       pageRangeDisplayed={4}
       pageCount={pageCount}
       previousLabel="<"
+      activeLinkClassName={styles.active}
+      forcePage={currentPage - 1}
     />
-);
+)};

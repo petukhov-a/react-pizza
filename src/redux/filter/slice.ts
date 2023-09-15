@@ -16,13 +16,13 @@ export const filterSlice = createSlice({
   initialState,
   reducers: {
     setCategoryId(state, action: PayloadAction<number>) {
-      state.categoryId = action.payload
+      state.categoryId = action.payload;
     },
     setSort(state, action: PayloadAction<Sort>) {
-        state.sort = action.payload
+        state.sort = action.payload;
     },
     setCurrentPage(state, action: PayloadAction<number>) {
-      state.currentPage = action.payload
+      state.currentPage = action.payload;
     },
     setFilters(state, action: PayloadAction<FilterSliceState>) {
       state.currentPage = Number(action.payload.currentPage);
@@ -31,7 +31,7 @@ export const filterSlice = createSlice({
     },
     setSearchValue(state, action: PayloadAction<string>) {
       state.searchValue = action.payload;
-    }
+    },
   },
 });
 

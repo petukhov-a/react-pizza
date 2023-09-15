@@ -37,7 +37,7 @@ const Home: FC = () => {
         .get(`https://64de3b97825d19d9bfb254c6.mockapi.io/items?${category}${search}`)
         .then(res => {
           const count = Math.ceil(res.data.length / 4);
-          setPageCount(count);
+          setPageCount(count)
         });
     }
 
@@ -51,6 +51,7 @@ const Home: FC = () => {
 
     const onChangeCategory = useCallback((idx: number) => {
       dispatch(setCategoryId(idx));
+      dispatch(setCurrentPage(1));
     }, []);
 
     const getPizzas = async () => {
